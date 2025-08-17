@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Push The Button — CTB</title>
+  <meta name="description" content="How many taps can you get in 60 seconds? Push the big red button. Neon arcade vibes, no sign-up." />
+  <meta property="og:title" content="Push The Button — CTB" />
+  <meta property="og:description" content="How many taps in 60 seconds? Play now." />
+  <meta property="og:image" content="public/og-placeholder.png" />
+  <meta name="theme-color" content="#0B0F1A" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@600&display=swap" rel="stylesheet">
+
+  <link rel="icon" type="image/svg+xml" href="public/favicon.svg" />
+  <link rel="stylesheet" href="styles/global.css" />
+
+  <!-- Plausible analytics (TODO: set your domain) -->
+  <!-- Replace data-domain value with your production hostname -->
+  <script defer data-domain="YOURDOMAIN.TLD" src="https://plausible.io/js/script.js"></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <!-- Simple neon CTB logo (wordmark) -->
+    <div class="logo" aria-label="CTB logo">
+      <svg width="120" height="36" viewBox="0 0 120 36" role="img" aria-labelledby="logoTitle">
+        <title id="logoTitle">CTB Logo</title>
+        <defs>
+          <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="2.5" result="coloredBlur"/>
+            <feMerge>
+              <feMergeNode in="coloredBlur"/>
+              <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+          </filter>
+        </defs>
+        <g filter="url(#glow)" fill="#00E5FF">
+          <text x="0" y="26" font-family="JetBrains Mono, monospace" font-size="28" font-weight="600">CTB</text>
+        </g>
+      </svg>
+    </div>
+
+    <nav class="top-controls" aria-label="Site controls">
+      <button id="muteToggle" class="ghost" aria-pressed="false" title="Toggle sound">🔊 Sound</button>
+      <label class="remember">
+        <input type="checkbox" id="rememberDevice" />
+        Remember on this device
+      </label>
+    </nav>
+  </header>
+
+  <main id="main" class="container">
+    <section class="hero" aria-labelledby="gameTitle">
+      <h1 id="gameTitle"><span class="neon-cyan">Push</span> The <span class="neon-magenta">Button</span></h1>
+      <p class="tagline">How many taps in <strong>60 seconds</strong>?</p>
+
+      <div class="hud" role="group" aria-label="Game heads-up display">
+        <div class="hud-item">
+          <div class="label">Time</div>
+          <div id="time" class="value">60.0</div>
+        </div>
+        <div class="hud-item">
+          <div class="label">Score</div>
+          <div id="score" class="value">0</div>
+        </div>
+        <div class="hud-item">
+          <div class="label">CPS</div>
+          <div id="cps" class="value">0.0</div>
+        </div>
+      </div>
+
+      <div class="button-wrap">
+        <!-- The Big Red Button -->
+        <button id="bigButton"
+          class="big-red"
+          aria-describedby="rules"
+          aria-label="Big red button. Press repeatedly to score."
+          >
+          <span class="gloss"></span>
+        </button>
+      </div>
+
+      <div class="controls">
+        <button id="startBtn" class="primary">Start 60s Round</button>
+        <button id="resetBtn" class="ghost" disabled>Reset</button>
+      </div>
+
+      <div class="meter-wrap" aria-label="CPS meter">
+        <div id="cpsMeter" class="meter"><span style="width:0%"></span></div>
+      </div>
+
+      <p id="rules" class="rules">
+        Mouse or touch only. One point per valid press. No keyboard. Rapid-fire presses under 20ms are ignored. Pauses if the tab is hidden.
+      </p>
+
+      <!-- Live region for screen readers -->
+      <div id="live" class="sr-only" aria-live="polite"></div>
+    </section>
+
+    <section id="results" class="results" hidden aria-labelledby="resultsTitle">
+      <h2 id="resultsTitle">Results</h2>
+      <div class="result-grid">
+        <div><span class="label">Final score</span><span id="finalScore" class="value">0</span></div>
+        <div><span class="label">Average CPS</span><span id="avgCps" class="value">0.0</span></div>
+        <div><span class="label">Best 1s CPS</span><span id="bestCps" class="value">0.0</span></div>
+      </div>
+
+      <div class="share">
+        <button id="shareBtn" class="primary">Share</button>
+        <button id="downloadCardBtn" class="ghost">Download Card</button>
+      </div>
+
+      <div class="leaderboards">
+        <div class="board">
+          <h3>Session Leaderboard</h3>
+          <ol id="sessionBoard" class="board-list" aria-live="polite"></ol>
+        </div>
+        <div class="board">
+          <h3>Device Best</h3>
+          <div id="deviceBest" class="device-best">—</div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>© <span id="year"></span> Push The Button • Neon arcade vibes</p>
+    <!-- Placeholder internal links for testing -->
+    <a href="#gameTitle">Back to top</a>
+  </footer>
+
+  <script src="scripts/audio.js"></script>
+  <script src="scripts/share-card.js"></script>
+  <script src="scripts/main.js"></script>
+</body>
+</html>
